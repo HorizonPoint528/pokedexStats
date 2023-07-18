@@ -1,23 +1,65 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from "react";
+import Axios from "axios";
 
 function App() {
+
+  const [pokemonName, setPokemonName] = useState("");
+  const[pokemonChosen, setPokemonChosen] = useState(false);
+  const [pokemon, setPokemon] = useState({
+            name: "", 
+            species: "", 
+            img: "",
+            type: "",
+            hp: "",
+            attack: "",
+            defense: "",
+            specialAttack: "",
+            specialDefense: "",
+            speed: "",
+  });
+
+  const searchPokemon = () => {
+      Axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`).then(
+        (response) => {
+          setPokemon({
+            name: pokemonName, 
+            img: response.data.sprites.front_default,
+            type: response.data.types[0].type.name,
+            hp: response.data.stats[0].base_stat,
+            attack: response.data.stats[1].base_stat,
+            defense: response.data.stats[2].base_stat,
+            specialAttack: response.data.stats[3].base_stat,
+            specialDefense: response.data.stats[4].base_stat,
+            speed: response.data.stats[5].base_stat,
+          });
+          setPokemonChosen(true);
+      }
+    );
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className = "TitleSection">
+      <h1>Pokemon Stats</h1>
+      <input type="text" autoCapitalize='words' onChange={(event)=> {setPokemonName(event.target.value)}}/>
+      <button onClick={searchPokemon}>Search Pokemon</button>
+      </div>
+      <div className="DisplaySection">{!pokemonChosen ? (<h1>Select a pokemon</h1>) : 
+      (
+        <>
+      <h1>{pokemon.name}</h1>
+      <img src= {pokemon.img}></img>
+      <h3>Type: {pokemon.type}</h3>
+      <h4>HP: {pokemon.hp}</h4>
+      <h4>attack: {pokemon.attack}</h4>
+      <h4>defense: {pokemon.defense}</h4>
+      <h4>specialAttack: {pokemon.specialAttack}</h4>
+      <h4>specialDefense: {pokemon.specialDefense}</h4>
+      <h4>Speed: {pokemon.speed}</h4>
+        </>
+      )}
+      </div>
     </div>
   );
 }
