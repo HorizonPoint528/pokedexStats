@@ -52,10 +52,10 @@ function App() {
       <img src= {pokemon.img}></img>
       <h3>Type: {pokemon.type}</h3>
       <h4>HP: {pokemon.hp}</h4>
-      <h4>attack: {pokemon.attack}</h4>
-      <h4>defense: {pokemon.defense}</h4>
-      <h4>specialAttack: {pokemon.specialAttack}</h4>
-      <h4>specialDefense: {pokemon.specialDefense}</h4>
+      <h4>Attack: {pokemon.attack}</h4>
+      <h4>Defense: {pokemon.defense}</h4>
+      <h4>Special Attack: {pokemon.specialAttack}</h4>
+      <h4>Special Defense: {pokemon.specialDefense}</h4>
       <h4>Speed: {pokemon.speed}</h4>
         </>
       )}
